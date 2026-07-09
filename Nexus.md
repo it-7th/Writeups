@@ -228,12 +228,12 @@ cat /root/root.txt            # ROOT FLAG
   - `jones` : `y27xb3ha!!74GbR` (SSH; from live CRM `.env`)
 
 ## Techniques used
-- [[Vhost Enumeration]]
-- [[Git Secrets in Commit History]]
-- [[Credential Reuse]]
-- [[Arbitrary File Upload]] (CVE-2026-38526)
-- [[Directory Traversal]] via unsanitized `os.path.join()`
-- [[Raw Git Object Crafting]] (bypassing `verify_path()`)
+- Vhost Enumeration
+- Git Secrets in Commit History
+- Credential Reuse
+- Arbitrary File Upload (CVE-2026-38526)
+- Directory Traversal via unsanitized `os.path.join()`
+- Raw Git Object Crafting (bypassing `verify_path()`)
 
 ## Lessons / what tripped me up
 - **Verify an exploit actually works before committing to it.** Chased the Gitea `X-WEBAUTH-USER` bypass (CVE-2026-20896) and a phpMyAdmin hunt — both dead ends. The repo was just public. The tell: the page still showed the `Sign In` link, i.e. not authenticated.
@@ -246,15 +246,3 @@ cat /root/root.txt            # ROOT FLAG
 ## Report notes
 - Screenshots taken: [ ]
 - Steps reproducible from notes alone: [x]
-
-## Cleanup performed
-```bash
-# hosts entries (both attacker machines)
-sudo sed -i '/nexus.htb/d' /etc/hosts          # Linux
-sudo sed -i '' '/nexus.htb/d' /etc/hosts        # macOS/BSD
-# firewall
-sudo ufw delete allow 4455/tcp
-# artifacts + known_hosts
-rm -rf ~/krayin-docker-setup ~/nexus_index.html shell.php cj.txt *.html *vhosts*.json
-ssh-keygen -R 10.129.46.29 ; rm -f ~/.ssh/known_hosts.old
-```
