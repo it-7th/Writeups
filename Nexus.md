@@ -13,7 +13,7 @@ tags: [box, linux, web, gitea, krayin, cve-2026-38526, directory-traversal, pyth
 
 ## Overview
 - Target: Ubuntu 24.04, nginx front-end doing name-based virtual hosting.
-- Attack path: vhost enum → Gitea public repo (leaked DB password) → Krayin CRM (`j.matthew@nexus.htb` + leaked pass) → [[Arbitrary File Upload]] (CVE-2026-38526) → shell as `www-data` → password reuse → SSH as `jones` (user) → [[Directory Traversal]] via `os.path.join()` in a root-run Python sync script → SSH key into `/root/.ssh/authorized_keys` → root.
+- Attack path: vhost enum → Gitea public repo (leaked DB password) → Krayin CRM (`j.matthew@nexus.htb` + leaked pass) → Arbitrary File Upload (CVE-2026-38526) → shell as `www-data` → password reuse → SSH as `jones` (user) → Directory Traversal via `os.path.join()` in a root-run Python sync script → SSH key into `/root/.ssh/authorized_keys` → root.
 - Key theme: **nothing here was a memory-corruption exploit** — it was all leaked/reused credentials + one Python path-handling bug.
 
 ## Recon / Enumeration
