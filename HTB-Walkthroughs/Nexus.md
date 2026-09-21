@@ -244,5 +244,4 @@ cat /root/root.txt            # ROOT FLAG
 - **Read the actual source on the box** (`template-sync.py`) to count the exact `..` depth instead of trusting a guess.
 
 ## Report notes
-- Screenshots taken: [ ]
 - Steps reproducible from notes alone: [x]
