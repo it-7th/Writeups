@@ -2,7 +2,7 @@
 
 Checkpoint is a Server 2025 domain controller, and it's the first box in a while where almost none of the difficulty was in the techniques themselves. The chain reads clean on paper: restore a deleted account, ride password reuse into a file share, plant a malicious VS Code extension for a shell, abuse a delegated service account to inherit privileges, then pull an Administrator hash out of a VM memory snapshot. What actually ate the time was tooling, because half of it doesn't speak to a signing-enforced 2025 DC properly yet, and the escalation technique is new enough that I ended up building it by hand with raw LDAP. So this is as much a writeup about fighting your own toolbox as it is about the box.
 
-One thing up front that colored everything: I ran this from Kali in a VM on an Apple-silicon laptop, and the hypervisor kept resyncing the guest clock about 7 hours behind the DC, between commands. Kerberos has a hard 5-minute skew window, so every Kerberos step kept dying until I wrapped each one in `faketime -f "+7h"`, which fakes the clock for a single process so the hypervisor can't stomp it mid-command. If your host keeps time normally you won't need it, but on mine it was the difference between working and not.
+One thing up front that colored everything: I ran this from Kali in a VM on laptop, and the hypervisor kept resyncing the guest clock about 7 hours behind the DC, between commands. Kerberos has a hard 5-minute skew window, so every Kerberos step kept dying until I wrapped each one in `faketime -f "+7h"`, which fakes the clock for a single process so the hypervisor can't stomp it mid-command. If your host keeps time normally you won't need it, but on mine it was the difference between working and not.
 
 ## Recon
 
